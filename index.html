@@ -5,41 +5,222 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Meine Projekte</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2c3e50;
+      --accent-color: #e74c3c;
+      --bg-color: #f8f9fa;
+      --text-color: #333;
+      --card-bg: #fff;
+      --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
+      box-sizing: border-box;
     }
-    header {
-      background: #333;
-      color: #fff;
-      padding: 1em 0;
-      text-align: center;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    .project {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      padding: 20px;
-    }
-    h1, h2 {
-      margin: 0 0 10px 0;
-    }
-    p {
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
       line-height: 1.6;
     }
-    footer {
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 2rem 0;
       text-align: center;
-      padding: 20px;
-      background: #333;
-      color: #fff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('/api/placeholder/1200/300') center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    header h1 {
+      position: relative;
+      z-index: 1;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    
+    .project {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .project:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .project-header {
+      background: var(--secondary-color);
+      color: white;
+      padding: 1.5rem;
+      position: relative;
+    }
+    
+    .project-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+    
+    .project-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+    
+    .project h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+    
+    .project p {
+      font-size: 1rem;
+      color: #555;
+    }
+    
+    .project-footer {
+      padding: 1rem 1.5rem;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.7rem;
+      border-radius: 50px;
+      background: var(--primary-color);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .learn-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .learn-more:hover {
+      color: var(--accent-color);
+    }
+    
+    footer {
+      background: var(--secondary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .social-links a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: var(--primary-color);
+      transform: translateY(-3px);
+    }
+    
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Custom project colors */
+    .project:nth-child(1) .project-header {
+      background: #e74c3c;
+    }
+    
+    .project:nth-child(2) .project-header {
+      background: #3498db;
+    }
+    
+    .project:nth-child(3) .project-header {
+      background: #2ecc71;
+    }
+    
+    .project:nth-child(4) .project-header {
+      background: #9b59b6;
+    }
+    
+    .project:nth-child(5) .project-header {
+      background: #f39c12;
     }
   </style>
 </head>
@@ -47,30 +228,94 @@
   <header>
     <h1>Meine Projekte</h1>
   </header>
+  
   <div class="container">
-    <div class="project">
-      <h2>Webscraper für eBay Kleinanzeigen</h2>
-      <p>Ein Webscraper, programmiert in Python, der eBay Kleinanzeigen durchsucht und relevante Daten extrahiert.</p>
-    </div>
-    <div class="project">
-      <h2>Dateimanager mit Nicegui</h2>
-      <p>Eine Webpage, entwickelt mit Nicegui, die es ermöglicht, Dateien einfach zu verschieben und zu verwalten.</p>
-    </div>
-    <div class="project">
-      <h2>Eigenen Chatbot mit Python und Ollama</h2>
-      <p>Ein individueller Chatbot, der mit Python entwickelt wurde und Ollama integriert, um intelligente Gespräche zu ermöglichen.</p>
-    </div>
-    <div class="project">
-      <h2>Taktzeitanalyse-Tool</h2>
-      <p>Ein aufwendiges Tool zur Taktzeitanalyse, programmiert in Python und realisiert mit Nicegui, um Produktionsprozesse zu optimieren.</p>
-    </div>
-    <div class="project">
-      <h2>Social Media Trend Analyzer</h2>
-      <p>Ein automatisiertes Analyse-Tool, das mithilfe von Python und verschiedenen APIs Social Media Daten sammelt und in Echtzeit Trends und Insights liefert.</p>
+    <div class="projects-grid">
+      <div class="project">
+        <div class="project-header">
+          <h2>Webscraper für eBay Kleinanzeigen</h2>
+          <div class="project-icon">🔍</div>
+        </div>
+        <div class="project-content">
+          <p>Ein leistungsstarker Webscraper, programmiert in Python, der eBay Kleinanzeigen durchsucht und relevante Daten extrahiert für einfache Marktanalysen.</p>
+        </div>
+        <div class="project-footer">
+          <span class="badge">Python</span>
+          <a href="#" class="learn-more">Details →</a>
+        </div>
+      </div>
+      
+      <div class="project">
+        <div class="project-header">
+          <h2>Dateimanager mit Nicegui</h2>
+          <div class="project-icon">📁</div>
+        </div>
+        <div class="project-content">
+          <p>Eine intuitive Weboberfläche, entwickelt mit Nicegui, die es ermöglicht, Dateien einfach zu verschieben, zu kategorisieren und zu verwalten.</p>
+        </div>
+        <div class="project-footer">
+          <span class="badge">Python</span>
+          <span class="badge">Nicegui</span>
+          <a href="#" class="learn-more">Details →</a>
+        </div>
+      </div>
+      
+      <div class="project">
+        <div class="project-header">
+          <h2>Chatbot mit Python und Ollama</h2>
+          <div class="project-icon">💬</div>
+        </div>
+        <div class="project-content">
+          <p>Ein individueller Chatbot, der mit Python entwickelt wurde und Ollama integriert, um intelligente Gespräche und Assistenzfunktionen zu ermöglichen.</p>
+        </div>
+        <div class="project-footer">
+          <span class="badge">Python</span>
+          <span class="badge">Ollama</span>
+          <a href="#" class="learn-more">Details →</a>
+        </div>
+      </div>
+      
+      <div class="project">
+        <div class="project-header">
+          <h2>Taktzeitanalyse-Tool</h2>
+          <div class="project-icon">⏱️</div>
+        </div>
+        <div class="project-content">
+          <p>Ein aufwendiges Tool zur Taktzeitanalyse, programmiert in Python und realisiert mit Nicegui, um Produktionsprozesse zu visualisieren und zu optimieren.</p>
+        </div>
+        <div class="project-footer">
+          <span class="badge">Python</span>
+          <span class="badge">Nicegui</span>
+          <a href="#" class="learn-more">Details →</a>
+        </div>
+      </div>
+      
+      <div class="project">
+        <div class="project-header">
+          <h2>Social Media Trend Analyzer</h2>
+          <div class="project-icon">📊</div>
+        </div>
+        <div class="project-content">
+          <p>Ein automatisiertes Analyse-Tool, das mithilfe von Python und verschiedenen APIs Social Media Daten sammelt und in Echtzeit Trends und Insights liefert.</p>
+        </div>
+        <div class="project-footer">
+          <span class="badge">Python</span>
+          <span class="badge">APIs</span>
+          <a href="#" class="learn-more">Details →</a>
+        </div>
+      </div>
     </div>
   </div>
+  
   <footer>
-    <p>© 2025 Ben. Alle Rechte vorbehalten.</p>
+    <div class="footer-content">
+      <p>© 2025 Ben. Alle Rechte vorbehalten.</p>
+      <div class="social-links">
+        <a href="#" aria-label="GitHub">G</a>
+        <a href="#" aria-label="LinkedIn">L</a>
+        <a href="#" aria-label="Twitter">T</a>
+      </div>
+    </div>
   </footer>
 </body>
 </html>
