@@ -396,6 +396,33 @@
   </style>
 </head>
 <body>
+    <script>
+        // Funktion zum Öffnen des Modals
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        // Funktion zum Schließen des Modals
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Schließen des Modals beim Klicken außerhalb des Modal-Inhalts
+        window.addEventListener('click', (event) => {
+            const modals = document.querySelectorAll('.modal-overlay.active');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
   <header>
     <h1>Meine Projekte</h1>
   </header>
@@ -770,19 +797,28 @@ def chat():
   </div>
   
   <!-- Modal 4: Taktzeitanalyse-Tool -->
-  <div class="modal-overlay" id="modal-4">
+<div class="modal-overlay" id="modal-4">
     <div class="modal">
-      <div class="modal-header">
-        <h2>Taktzeitanalyse-Tool</h2>
-        <button class="modal-close" onclick="closeModal('modal-4')">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-section">
-          <h3>Projektbeschreibung</h3>
-          <p>Dieses spezialisierte Analyse-Tool wurde entwickelt, um Produktionsprozesse zu optimieren, indem es Taktzeiten genau misst, visualisiert und analysiert. Es hilft Produktionsmanagern, Engpässe zu identifizieren, Prozesseffizienz zu steigern und Produktionskosten zu senken durch datengetriebene Entscheidungsfindung.</p>
-          
-          <div class="screenshot">Beispiel-Screenshot: Dashboard mit Taktzeitanalyse und Prozessvisualisierung</div>
+        <div class="modal-header">
+            <h2>Taktzeitanalyse-Tool</h2>
+            <button class="modal-close" onclick="closeModal('modal-4')">×</button>
         </div>
-        
-        <div class="modal-section">
-          <h3>
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>Projektbeschreibung</h3>
+                <p>Dieses spezialisierte Analyse-Tool wurde entwickelt, um Produktionsprozesse zu optimieren, indem es Taktzeiten genau misst, visualisiert und analysiert. Es hilft Produktionsmanagern, Engpässe zu identifizieren, Prozesseffizienz zu steigern und Produktionskosten zu senken durch datengetriebene Entscheidungsfindung.</p>
+                
+                <div class="screenshot">Beispiel-Screenshot: Dashboard mit Taktzeitanalyse und Prozessvisualisierung</div>
+            </div>
+            
+            <div class="modal-section">
+                <h3>Weitere Informationen</h3>
+                <p>Hier kannst du weitere Details über das Tool hinzufügen.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal('modal-4')">Schließen</button>
+            <!-- Hier kannst weitere Aktions-Buttons hinzufügen, falls nötig -->
+        </div>
+    </div>
+</div>
