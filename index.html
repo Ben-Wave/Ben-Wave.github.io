@@ -136,6 +136,7 @@
       color: white;
       font-size: 0.8rem;
       font-weight: 500;
+      margin-right: 0.5rem;
     }
     
     .learn-more {
@@ -145,6 +146,7 @@
       display: inline-flex;
       align-items: center;
       transition: var(--transition);
+      cursor: pointer;
     }
     
     .learn-more:hover {
@@ -192,6 +194,150 @@
       transform: translateY(-3px);
     }
     
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal {
+      background: white;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    
+    .modal-header {
+      padding: 1.5rem;
+      background: var(--secondary-color);
+      color: white;
+      position: relative;
+    }
+    
+    .modal-close {
+      position: absolute;
+      right: 1.5rem;
+      top: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .modal-close:hover {
+      transform: scale(1.1);
+    }
+    
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+    
+    .modal-section h3 {
+      margin-bottom: 0.8rem;
+      color: var(--secondary-color);
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    
+    .feature-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .feature-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    
+    .feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .code-snippet {
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    
+    .screenshot {
+      width: 100%;
+      height: 200px;
+      background: #eee;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      margin: 1rem 0;
+    }
+    
+    /* Button styles */
+    .button {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .button:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+    
     @media (max-width: 768px) {
       .projects-grid {
         grid-template-columns: 1fr;
@@ -199,6 +345,10 @@
       
       header h1 {
         font-size: 2rem;
+      }
+      
+      .modal {
+        width: 95%;
       }
     }
 
@@ -222,6 +372,27 @@
     .project:nth-child(5) .project-header {
       background: #f39c12;
     }
+
+    /* Modal header colors (matching the cards) */
+    #modal-1 .modal-header {
+      background: #e74c3c;
+    }
+    
+    #modal-2 .modal-header {
+      background: #3498db;
+    }
+    
+    #modal-3 .modal-header {
+      background: #2ecc71;
+    }
+    
+    #modal-4 .modal-header {
+      background: #9b59b6;
+    }
+    
+    #modal-5 .modal-header {
+      background: #f39c12;
+    }
   </style>
 </head>
 <body>
@@ -240,8 +411,11 @@
           <p>Ein leistungsstarker Webscraper, programmiert in Python, der eBay Kleinanzeigen durchsucht und relevante Daten extrahiert für einfache Marktanalysen.</p>
         </div>
         <div class="project-footer">
-          <span class="badge">Python</span>
-          <a href="#" class="learn-more">Details →</a>
+          <div>
+            <span class="badge">Python</span>
+            <span class="badge">BeautifulSoup</span>
+          </div>
+          <a class="learn-more" onclick="openModal('modal-1')">Details →</a>
         </div>
       </div>
       
@@ -254,9 +428,11 @@
           <p>Eine intuitive Weboberfläche, entwickelt mit Nicegui, die es ermöglicht, Dateien einfach zu verschieben, zu kategorisieren und zu verwalten.</p>
         </div>
         <div class="project-footer">
-          <span class="badge">Python</span>
-          <span class="badge">Nicegui</span>
-          <a href="#" class="learn-more">Details →</a>
+          <div>
+            <span class="badge">Python</span>
+            <span class="badge">Nicegui</span>
+          </div>
+          <a class="learn-more" onclick="openModal('modal-2')">Details →</a>
         </div>
       </div>
       
@@ -269,9 +445,11 @@
           <p>Ein individueller Chatbot, der mit Python entwickelt wurde und Ollama integriert, um intelligente Gespräche und Assistenzfunktionen zu ermöglichen.</p>
         </div>
         <div class="project-footer">
-          <span class="badge">Python</span>
-          <span class="badge">Ollama</span>
-          <a href="#" class="learn-more">Details →</a>
+          <div>
+            <span class="badge">Python</span>
+            <span class="badge">Ollama</span>
+          </div>
+          <a class="learn-more" onclick="openModal('modal-3')">Details →</a>
         </div>
       </div>
       
@@ -284,9 +462,12 @@
           <p>Ein aufwendiges Tool zur Taktzeitanalyse, programmiert in Python und realisiert mit Nicegui, um Produktionsprozesse zu visualisieren und zu optimieren.</p>
         </div>
         <div class="project-footer">
-          <span class="badge">Python</span>
-          <span class="badge">Nicegui</span>
-          <a href="#" class="learn-more">Details →</a>
+          <div>
+            <span class="badge">Python</span>
+            <span class="badge">Nicegui</span>
+            <span class="badge">Pandas</span>
+          </div>
+          <a class="learn-more" onclick="openModal('modal-4')">Details →</a>
         </div>
       </div>
       
@@ -299,23 +480,309 @@
           <p>Ein automatisiertes Analyse-Tool, das mithilfe von Python und verschiedenen APIs Social Media Daten sammelt und in Echtzeit Trends und Insights liefert.</p>
         </div>
         <div class="project-footer">
-          <span class="badge">Python</span>
-          <span class="badge">APIs</span>
-          <a href="#" class="learn-more">Details →</a>
+          <div>
+            <span class="badge">Python</span>
+            <span class="badge">APIs</span>
+            <span class="badge">NLP</span>
+          </div>
+          <a class="learn-more" onclick="openModal('modal-5')">Details →</a>
         </div>
       </div>
     </div>
   </div>
   
-  <footer>
-    <div class="footer-content">
-      <p>© 2025 Ben. Alle Rechte vorbehalten.</p>
-      <div class="social-links">
-        <a href="#" aria-label="GitHub">G</a>
-        <a href="#" aria-label="LinkedIn">L</a>
-        <a href="#" aria-label="Twitter">T</a>
+  <!-- Modal 1: Webscraper für eBay Kleinanzeigen -->
+  <div class="modal-overlay" id="modal-1">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Webscraper für eBay Kleinanzeigen</h2>
+        <button class="modal-close" onclick="closeModal('modal-1')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Projektbeschreibung</h3>
+          <p>Dieses Tool wurde entwickelt, um Angebote auf eBay Kleinanzeigen automatisch zu durchsuchen und relevante Daten wie Preis, Standort, Beschreibung und Kontaktinformationen zu extrahieren. Es hilft dabei, Markttrends zu erkennen, Preisvergleiche durchzuführen und potenzielle Kaufgelegenheiten schneller zu identifizieren.</p>
+          
+          <div class="screenshot">Beispiel-Screenshot: Datenvisualisierung der extrahierten Angebote</div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Hauptfunktionen</h3>
+          <ul class="feature-list">
+            <li>Automatische Suche nach bestimmten Produkten oder Kategorien</li>
+            <li>Extraktion von Preis, Titel, Beschreibung, Standort und Datum</li>
+            <li>Speicherung der Daten in CSV- oder JSON-Format</li>
+            <li>Preisalarm-Funktion bei Unterschreitung bestimmter Schwellenwerte</li>
+            <li>Visualisierung von Preisstatistiken und Trends</li>
+            <li>Proxy-Rotation zur Vermeidung von Blocking</li>
+          </ul>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Technologien</h3>
+          <p>Für dieses Projekt wurden folgende Technologien eingesetzt:</p>
+          <div class="tech-stack">
+            <span class="badge">Python 3.9+</span>
+            <span class="badge">BeautifulSoup4</span>
+            <span class="badge">Requests</span>
+            <span class="badge">Selenium</span>
+            <span class="badge">Pandas</span>
+            <span class="badge">Matplotlib</span>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Code-Beispiel</h3>
+          <div class="code-snippet">
+            <pre>import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def scrape_kleinanzeigen(search_term, max_pages=5):
+    base_url = "https://www.ebay-kleinanzeigen.de/s-"
+    results = []
+    
+    for page in range(1, max_pages+1):
+        url = f"{base_url}{search_term}/seite:{page}"
+        response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
+        
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            listings = soup.find_all('article', class_='aditem')
+            
+            for item in listings:
+                title = item.find('h2').text.strip()
+                price = item.find('p', class_='aditem-main--middle--price').text.strip()
+                location = item.find('div', class_='aditem-main--top--left').text.strip()
+                
+                results.append({
+                    'title': title,
+                    'price': price,
+                    'location': location
+                })
+        
+    return pd.DataFrame(results)</pre>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Herausforderungen & Lösungen</h3>
+          <p>Die größte Herausforderung bei diesem Projekt war der Umgang mit den Anti-Scraping-Maßnahmen von eBay Kleinanzeigen. Dies wurde durch eine Kombination aus verzögerten Anfragen, Rotierung von User-Agents und gelegentlichem Einsatz von Proxies gelöst. Zusätzlich wurde ein robustes Fehlerbehandlungssystem implementiert, um mit fehlerhaften oder sich ändernden HTML-Strukturen umzugehen.</p>
+        </div>
       </div>
     </div>
-  </footer>
-</body>
-</html>
+  </div>
+  
+  <!-- Modal 2: Dateimanager mit Nicegui -->
+  <div class="modal-overlay" id="modal-2">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Dateimanager mit Nicegui</h2>
+        <button class="modal-close" onclick="closeModal('modal-2')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Projektbeschreibung</h3>
+          <p>Dieser moderne Dateimanager wurde mit Nicegui entwickelt, einer Python-Bibliothek für die Erstellung von Webschnittstellen. Die Anwendung ermöglicht es Benutzern, ihre Dateien über einen Webbrowser zu verwalten, zu organisieren und zu bearbeiten, unabhängig vom Betriebssystem und ohne zusätzliche Software installieren zu müssen.</p>
+          
+          <div class="screenshot">Beispiel-Screenshot: Hauptoberfläche des Dateimanagers</div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Hauptfunktionen</h3>
+          <ul class="feature-list">
+            <li>Drag-and-Drop-Schnittstelle für einfaches Dateiverschieben</li>
+            <li>Batchverarbeitung mehrerer Dateien gleichzeitig</li>
+            <li>Automatische Kategorisierung nach Dateityp</li>
+            <li>Dateivorschau für gängige Formate (Bilder, PDFs, Textdateien)</li>
+            <li>Suche mit Echtzeit-Filterung</li>
+            <li>Zugriffssteuerung mit Benutzerauthentifizierung</li>
+            <li>Responsive Design für mobile und Desktop-Nutzung</li>
+          </ul>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Technologien</h3>
+          <p>Für dieses Projekt wurden folgende Technologien eingesetzt:</p>
+          <div class="tech-stack">
+            <span class="badge">Python 3.9+</span>
+            <span class="badge">Nicegui</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">SQLite</span>
+            <span class="badge">Vue.js</span>
+            <span class="badge">Tailwind CSS</span>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Code-Beispiel</h3>
+          <div class="code-snippet">
+            <pre>from nicegui import ui
+import os
+from pathlib import Path
+
+def create_file_manager(root_dir: str):
+    current_dir = Path(root_dir)
+    
+    # Breadcrumb navigation
+    with ui.row().classes('w-full'):
+        breadcrumb_container = ui.element()
+        def update_breadcrumbs():
+            breadcrumb_container.clear()
+            parts = current_dir.relative_to(root_dir).parts
+            with breadcrumb_container:
+                ui.button('Home', on_click=lambda: navigate_to(root_dir))
+                for i, part in enumerate(parts):
+                    ui.label('/')
+                    path = root_dir / Path(*parts[:i+1])
+                    ui.button(part, on_click=lambda p=path: navigate_to(p))
+    
+    # File list
+    file_container = ui.element()
+    def update_file_list():
+        file_container.clear()
+        with file_container:
+            with ui.grid(columns=4).classes('gap-4'):
+                for item in current_dir.iterdir():
+                    if item.is_dir():
+                        ui.card(item.name, on_click=lambda p=item: navigate_to(p)).classes('cursor-pointer')
+                    else:
+                        ui.card(f"{item.name}\n{item.stat().st_size} bytes").classes('bg-blue-50')
+    
+    def navigate_to(path):
+        nonlocal current_dir
+        current_dir = Path(path)
+        update_breadcrumbs()
+        update_file_list()
+    
+    update_breadcrumbs()
+    update_file_list()</pre>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Besondere Merkmale</h3>
+          <p>Ein herausragendes Merkmal dieses Dateimanagers ist die intelligente Medienbibliothek, die Metadaten aus Bildern und Dokumenten extrahiert und diese automatisch organisiert. Die Software bietet auch einen eingebauten Echtzeit-Datei-Synchronisationsmechanismus, der es mehreren Benutzern ermöglicht, gleichzeitig am gleichen Dateisystem zu arbeiten, ohne Konflikte zu verursachen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 3: Chatbot mit Python und Ollama -->
+  <div class="modal-overlay" id="modal-3">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Chatbot mit Python und Ollama</h2>
+        <button class="modal-close" onclick="closeModal('modal-3')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Projektbeschreibung</h3>
+          <p>Dieser maßgeschneiderte Chatbot nutzt die Leistungsfähigkeit von Ollama und lokalen KI-Modellen, um intelligente Konversationen zu ermöglichen. Die Anwendung läuft vollständig lokal, wodurch Datenschutz gewährleistet und eine Internetverbindung nicht zwingend erforderlich ist. Der Chatbot ist auf spezifische Anwendungsfälle anpassbar und kann mit individuellen Wissensdatenbanken erweitert werden.</p>
+          
+          <div class="screenshot">Beispiel-Screenshot: Chatbot-Interface mit Konversationsverlauf</div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Hauptfunktionen</h3>
+          <ul class="feature-list">
+            <li>Integration verschiedener Ollama-Modelle (Llama, Mistral, etc.)</li>
+            <li>Kontext-bewusste Gespräche mit Gedächtnis für vorherige Interaktionen</li>
+            <li>Anpassbare Persönlichkeit und Ton des Chatbots</li>
+            <li>Integration mit lokalen Dokumenten zur Wissenserweiterung</li>
+            <li>Multi-Turn-Konversationen mit Follow-up-Fragen</li>
+            <li>Exportieren und Importieren von Gesprächsverläufen</li>
+            <li>Einbindung in bestehende Systeme über API-Schnittstelle</li>
+          </ul>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Technologien</h3>
+          <p>Für dieses Projekt wurden folgende Technologien eingesetzt:</p>
+          <div class="tech-stack">
+            <span class="badge">Python 3.10+</span>
+            <span class="badge">Ollama</span>
+            <span class="badge">LangChain</span>
+            <span class="badge">Flask</span>
+            <span class="badge">SQLite</span>
+            <span class="badge">FAISS</span>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Code-Beispiel</h3>
+          <div class="code-snippet">
+            <pre>import ollama
+from flask import Flask, request, jsonify
+from langchain.memory import ConversationBufferMemory
+
+app = Flask(__name__)
+memory = ConversationBufferMemory(return_messages=True)
+
+def format_prompt(user_input, context=""):
+    return f"""
+    {context}
+    
+    Benutzer: {user_input}
+    Assistent: 
+    """
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    user_input = data.get('message', '')
+    
+    # Get conversation history
+    history = memory.chat_memory.messages
+    context = "\n".join([f"{msg.type.capitalize()}: {msg.content}" for msg in history[-6:]])
+    
+    # Generate response with Ollama
+    response = ollama.generate(
+        model='mistral',
+        prompt=format_prompt(user_input, context),
+        options={
+            'temperature': 0.7,
+            'top_p': 0.9,
+            'max_tokens': 500
+        }
+    )
+    
+    # Save to memory
+    memory.chat_memory.add_user_message(user_input)
+    memory.chat_memory.add_ai_message(response['response'])
+    
+    return jsonify({"response": response['response']})</pre>
+          </div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Anwendungsfälle</h3>
+          <p>Der Chatbot wurde für verschiedene Szenarien angepasst, darunter:</p>
+          <ul class="feature-list">
+            <li>Persönlicher Assistent für Projektmanagement</li>
+            <li>Technischer Support-Bot mit Zugriff auf Dokumentation</li>
+            <li>Kreativassistent für Brainstorming und Ideenfindung</li>
+            <li>Eingebetteter Assistent in einer Desktop-Anwendung</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 4: Taktzeitanalyse-Tool -->
+  <div class="modal-overlay" id="modal-4">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Taktzeitanalyse-Tool</h2>
+        <button class="modal-close" onclick="closeModal('modal-4')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Projektbeschreibung</h3>
+          <p>Dieses spezialisierte Analyse-Tool wurde entwickelt, um Produktionsprozesse zu optimieren, indem es Taktzeiten genau misst, visualisiert und analysiert. Es hilft Produktionsmanagern, Engpässe zu identifizieren, Prozesseffizienz zu steigern und Produktionskosten zu senken durch datengetriebene Entscheidungsfindung.</p>
+          
+          <div class="screenshot">Beispiel-Screenshot: Dashboard mit Taktzeitanalyse und Prozessvisualisierung</div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>
